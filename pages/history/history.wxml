@@ -1,0 +1,55 @@
+<view class="container flex-col">
+  <view class="empty-tip" wx:if="{{!historyList || historyList.length === 0}}">
+    暂无计算记录
+  </view>
+  
+  <scroll-view scroll-y class="list-container" wx:else>
+    <t-checkbox-group bind:change="onCheckboxChange" value="{{selectedValues}}">
+      <view class="history-card flex-row" wx:for="{{historyList}}" wx:key="timeFlag">
+        <view class="checkbox-container flex-center">
+          <t-checkbox value="{{item.timeFlag}}" />
+        </view>
+        <view class="card-content">
+          <view class="card-header flex-space-between">
+            <text class="time">{{item.timeStr}} <text class="exp-type" wx:if="{{item.expType}}" style="color:#007aff; margin-left:10rpx;">[{{item.expType}}]</text></text>
+            <text class="alg">{{item.algName}}</text>
+          </view>
+          <view class="card-body">
+            <text class="res-title">最终结果: </text>
+            <text class="res-val">{{item.resultStr}} / 0.1mL</text>
+            
+            <view class="params-summary">
+              初始: {{item.base || 10}}^{{item.startExp || item.startLog}} | {{item.stepFactor}}倍 | {{item.rep}}孔
+            </view>
+            <view class="positives-row">
+              <text>阳性数: [{{item.positives}}]</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </t-checkbox-group>
+  </scroll-view>
+
+  <view class="bottom-area flex-space-between">
+    <view class="select-all-btn flex-center">
+      <t-checkbox checked="{{isAllSelected}}" bind:change="onToggleAll" label="全选" />
+    </view>
+    <t-button theme="primary" variant="base" disabled="{{!historyList || historyList.length === 0 || selectedCount === 0}}" bind:tap="onExport" style="width: 400rpx; border-radius: 44rpx;">导出为 Excel</t-button>
+  </view>
+
+  <!-- Column Selection Dialog -->
+  <t-dialog
+    visible="{{showColModal}}"
+    title="选择需导出的数据"
+    cancel-btn="取消"
+    confirm-btn="生成文件"
+    bind:cancel="closeColModal"
+    bind:confirm="confirmExport"
+  >
+    <view slot="content" class="modal-body flex-col" style="align-items: flex-start;">
+      <t-checkbox-group bind:change="onColCheckboxChange" value="{{selectedColsValues}}" class="col-checkbox-group">
+        <t-checkbox wx:for="{{exportColumns}}" wx:key="name" value="{{item.name}}" label="{{item.name}}" class="col-checkbox-label" />
+      </t-checkbox-group>
+    </view>
+  </t-dialog>
+</view>

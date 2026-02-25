@@ -1,0 +1,94 @@
+page {
+  background-color: #ffffff;
+}
+
+.home-container {
+  min-height: 100vh;
+  padding: 40rpx;
+  box-sizing: border-box;
+  background-color: #f7f8fa; /* A softer white typical of modern UIs */
+  animation: fadeIn 0.8s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20rpx); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.welcome-section {
+  margin-top: 80rpx;
+  margin-bottom: 60rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 16rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #888888;
+}
+
+.custom-grid {
+  flex: 1;
+  width: 100%;
+  --td-grid-bg-color: transparent;
+}
+
+.grid-btn {
+  width: 100%;
+  height: 240rpx !important; /* Made significantly larger */
+  border-radius: 32rpx !important;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.04);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.grid-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.02);
+}
+
+.btn-icon {
+  margin-bottom: 24rpx;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #0052d9, #007aff) !important;
+  border: none !important;
+}
+
+.primary-btn .btn-text {
+  color: #ffffff;
+  font-size: 40rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+}
+
+.secondary-btn {
+  background-color: #ffffff !important;
+  border: 2rpx solid #e0e0e0 !important;
+}
+
+.secondary-btn .btn-text {
+  font-size: 34rpx;
+  font-weight: 500;
+}
+
+.empty-btn {
+  background-color: #f0f2f5 !important;
+  border: 4rpx dashed #dcdfe6;
+  box-shadow: none;
+  height: 240rpx;
+  border-radius: 32rpx;
+}

@@ -1,0 +1,9 @@
+{
+    "navigationBarTitleText": "历史记录",
+    "usingComponents": {
+        "t-checkbox": "tdesign-miniprogram/checkbox/checkbox",
+        "t-checkbox-group": "tdesign-miniprogram/checkbox-group/checkbox-group",
+        "t-button": "tdesign-miniprogram/button/button",
+        "t-dialog": "tdesign-miniprogram/dialog/dialog"
+    }
+}

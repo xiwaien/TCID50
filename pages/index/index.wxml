@@ -1,0 +1,103 @@
+<view class="container flex-col">
+  <!-- Parameter section -->
+  <view class="section params-card">
+    <t-cell-group theme="card">
+      <t-cell title="实验类型" arrow hover note="{{experimentTypes[expIndex]}}" bind:tap="onExperimentPicker" />
+      <t-cell title="计算算法" arrow hover note="{{algorithms[algIndex]}}" bind:tap="onAlgorithmPicker" />
+      <t-cell title="初始稀释度(指数)" arrow hover note="{{stepValuesOptions[stepIndex]}}^{{startLogValues[startLogIndex]}}" bind:tap="onStartLogPicker" />
+      <t-cell title="稀释倍数" arrow hover note="{{stepValuesOptions[stepIndex]}}倍" bind:tap="onStepPicker" />
+      <t-cell title="每组孔数(Replicates)" arrow hover note="{{replicatesNum[repIndex]}}孔" bind:tap="onReplicatesPicker" />
+      <t-cell title="稀释梯数(Steps)" arrow hover note="{{stepsNum[stepsIndex]}}梯" bind:tap="onStepsNumPicker" />
+    </t-cell-group>
+  </view>
+
+  <!-- Pickers -->
+  <t-picker visible="{{expVisible}}" value="{{[expIndex]}}" title="选择实验类型" cancelBtn="取消" confirmBtn="确认" bindchange="onExpChange" bindcancel="onPickerCancel" bindconfirm="onPickerCancel">
+    <t-picker-item options="{{expOptions}}" />
+  </t-picker>
+
+  <t-picker visible="{{algVisible}}" value="{{[algIndex]}}" title="选择计算算法" cancelBtn="取消" confirmBtn="确认" bindchange="onAlgChange" bindcancel="onPickerCancel" bindconfirm="onPickerCancel">
+    <t-picker-item options="{{algOptions}}" />
+  </t-picker>
+
+  <t-picker visible="{{startLogVisible}}" value="{{[startLogIndex]}}" title="选择初始指数" cancelBtn="取消" confirmBtn="确认" bindchange="onStartLogChange" bindcancel="onPickerCancel" bindconfirm="onPickerCancel">
+    <t-picker-item options="{{startLogOptions}}" />
+  </t-picker>
+
+  <t-picker visible="{{stepVisible}}" value="{{[stepIndex]}}" title="选择稀释倍数" cancelBtn="取消" confirmBtn="确认" bindchange="onStepChange" bindcancel="onPickerCancel" bindconfirm="onPickerCancel">
+    <t-picker-item options="{{stepOptions}}" />
+  </t-picker>
+
+  <t-picker visible="{{repVisible}}" value="{{[repIndex]}}" title="选择每组孔数" cancelBtn="取消" confirmBtn="确认" bindchange="onRepChange" bindcancel="onPickerCancel" bindconfirm="onPickerCancel">
+    <t-picker-item options="{{repOptions}}" />
+  </t-picker>
+
+  <t-picker visible="{{stepsNumVisible}}" value="{{[stepsIndex]}}" title="选择稀释梯数" cancelBtn="取消" confirmBtn="确认" bindchange="onStepsNumChange" bindcancel="onPickerCancel" bindconfirm="onPickerCancel">
+    <t-picker-item options="{{stepsNumOptions}}" />
+  </t-picker>
+
+  <!-- Input Matrix -->
+  <view class="section matrix-card">
+    <view class="matrix-header flex-space-between">
+      <text class="head-dilution">稀释度</text>
+      <text class="head-wells">阳性孔数点击选择</text>
+    </view>
+    <view class="matrix-row flex-row" wx:for="{{stepsNum[stepsIndex]}}" wx:key="index">
+      <view class="dilution-label">{{stepValuesOptions[stepIndex]}}^{{startLogValues[startLogIndex] - index}}</view>
+      <view class="wells-container">
+        <view class="wells-wrapper flex-row">
+          <view class="well-btn-wrapper" wx:for="{{replicatesNum[repIndex] + 1}}" wx:for-item="btnItem" wx:for-index="btnIndex" wx:key="btnIndex">
+            <t-button
+              class="well-btn {{(btnIndex <= positives[index] && btnIndex !== 0 && positives[index] !== 0) || (btnIndex === 0 && positives[index] === 0) ? 'selected' : ''}}" 
+              shape="circle"
+              theme="{{(btnIndex <= positives[index] && btnIndex !== 0 && positives[index] !== 0) || (btnIndex === 0 && positives[index] === 0) ? 'primary' : 'default'}}"
+              variant="{{(btnIndex <= positives[index] && btnIndex !== 0 && positives[index] !== 0) || (btnIndex === 0 && positives[index] === 0) ? 'base' : 'light'}}"
+              data-step="{{index}}"
+              data-val="{{btnIndex}}"
+              bind:tap="onWellTap">
+              {{btnIndex}}
+            </t-button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Button -->
+  <view class="submit-area">
+    <t-button theme="primary" size="large" block bind:tap="onCalculate" style="border-radius: 44rpx;">开始计算</t-button>
+  </view>
+
+  <!-- Result Dialog -->
+  <t-dialog
+    visible="{{showResult}}"
+    title="计算结果"
+    confirm-btn="我知道了"
+    bind:confirm="closeResult"
+  >
+    <view slot="content" class="modal-body flex-col">
+      <text class="result-value" wx:if="{{resultData.success}}">{{resultData.resultStr}} / 0.1mL</text>
+      
+      <view class="details-box flex-col" wx:if="{{resultData.success}}">
+        <text class="detail-text">实验类型: {{experimentTypes[expIndex]}}</text>
+        <text class="detail-text">算法: {{algorithms[algIndex]}}</text>
+        
+        <block wx:if="{{algIndex === 0}}">
+          <text class="detail-text">>50%感染率: {{resultData.details.rateAbove}}</text>
+          <text class="detail-text" decode="true">&lt;50%感染率: {{resultData.details.rateBelow}}</text>
+          <text class="detail-text">距离比例(PD): {{resultData.details.PD}}</text>
+          <text class="detail-text">高于50%稀释度: 10^{{resultData.details.logDilutionAbove}}</text>
+        </block>
+        <block wx:if="{{algIndex === 1}}">
+          <text class="detail-text">阳性比例总和(ΣPi): {{resultData.details.sumPi}}</text>
+          <text class="detail-text">初始稀释度(X0): 10^{{resultData.details.X0}}</text>
+          <text class="detail-text">公式计算: {{resultData.details.formula}}</text>
+        </block>
+      </view>
+      
+      <view class="details-box error-box" wx:else>
+        <text class="error-text">{{resultData.error}}</text>
+      </view>
+    </view>
+  </t-dialog>
+</view>

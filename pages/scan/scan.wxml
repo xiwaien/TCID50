@@ -1,0 +1,9 @@
+<view class="scan-container flex-col flex-center">
+  <view class="icon-wrapper">
+    <t-icon name="scan" size="100rpx" color="#0052d9" />
+  </view>
+  <text class="status-text">AI 识板功能开发中</text>
+  <text class="sub-text">敬请期待基于人工智能的视觉读取能力</text>
+  
+  <t-button theme="primary" size="large" bind:tap="goBack" class="back-btn" block style="border-radius: 44rpx;">返回首页</t-button>
+</view>

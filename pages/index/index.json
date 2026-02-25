@@ -1,0 +1,11 @@
+{
+    "navigationBarTitleText": "TCID50滴度计算器",
+    "usingComponents": {
+        "t-picker": "tdesign-miniprogram/picker/picker",
+        "t-picker-item": "tdesign-miniprogram/picker-item/picker-item",
+        "t-button": "tdesign-miniprogram/button/button",
+        "t-cell": "tdesign-miniprogram/cell/cell",
+        "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+        "t-dialog": "tdesign-miniprogram/dialog/dialog"
+    }
+}

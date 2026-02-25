@@ -1,0 +1,25 @@
+<view class="home-container">
+  <view class="welcome-section">
+    <text class="title">TCID50 计算器</text>
+    <text class="subtitle">简单、高效的滴度分析工具</text>
+  </view>
+  
+  <t-grid column="{{2}}" gap="20" class="custom-grid">
+    <t-grid-item>
+      <t-button class="grid-btn primary-btn" theme="primary" size="large" bind:tap="goToCalculator" block>
+        <t-icon name="calculator" size="48rpx" class="btn-icon" />
+        <text class="btn-text">滴度计算</text>
+      </t-button>
+    </t-grid-item>
+    <t-grid-item><view class="grid-btn empty-btn"></view></t-grid-item>
+    <t-grid-item><view class="grid-btn empty-btn"></view></t-grid-item>
+    <t-grid-item><view class="grid-btn empty-btn"></view></t-grid-item>
+    <t-grid-item><view class="grid-btn empty-btn"></view></t-grid-item>
+    <t-grid-item>
+      <t-button class="grid-btn secondary-btn" theme="light" size="large" bind:tap="showOtherOptions" block>
+        <t-icon name="app" size="48rpx" class="btn-icon" />
+        <text class="btn-text" style="color:#005ce6">其他功能</text>
+      </t-button>
+    </t-grid-item>
+  </t-grid>
+</view>

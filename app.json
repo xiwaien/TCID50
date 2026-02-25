@@ -1,0 +1,42 @@
+{
+    "pages": [
+        "pages/home/home",
+        "pages/index/index",
+        "pages/scan/scan",
+        "pages/history/history"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#007aff",
+        "navigationBarTitleText": "TCID50滴度计算器",
+        "navigationBarTextStyle": "white"
+    },
+    "tabBar": {
+        "color": "#999999",
+        "selectedColor": "#007aff",
+        "backgroundColor": "#ffffff",
+        "borderStyle": "black",
+        "list": [
+            {
+                "pagePath": "pages/home/home",
+                "text": "主页",
+                "iconPath": "assets/icons/home.png",
+                "selectedIconPath": "assets/icons/home_active.png"
+            },
+            {
+                "pagePath": "pages/scan/scan",
+                "text": "AI识板",
+                "iconPath": "assets/icons/scan.png",
+                "selectedIconPath": "assets/icons/scan_active.png"
+            },
+            {
+                "pagePath": "pages/history/history",
+                "text": "历史记录",
+                "iconPath": "assets/icons/history.png",
+                "selectedIconPath": "assets/icons/history_active.png"
+            }
+        ]
+    },
+    "sitemapLocation": "sitemap.json",
+    "lazyCodeLoading": "requiredComponents"
+}
